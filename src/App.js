@@ -4,9 +4,7 @@ import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import Jhdees from './Components/Jhdees.js';
 
-const store = createStore(
-    management
-);
+const store = createStore(management);
 
 class App extends Component {
     render() {
