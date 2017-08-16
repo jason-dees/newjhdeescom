@@ -3,7 +3,7 @@
  */
 import { GO_TO_INDEX } from '../Actions/siteactions'
 
-export default (state = {activeIndex: 0}, action) =>{
+export default (state = {activeIndex: 1}, action) =>{
     switch(action.type){
         case GO_TO_INDEX:
             return {activeIndex: action.index};

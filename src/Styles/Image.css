@@ -1,0 +1,14 @@
+.color-preview{
+    position:absolute;
+    height:50px;
+    width:50px;
+    box-shadow:0px 0px 5px 2px black;
+    border-radius:3px;
+}
+
+.btn{
+}
+
+.current-color{
+    padding-left:10px;
+}

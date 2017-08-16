@@ -3,8 +3,11 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types';
 import '../Styles/Jhdees.css';
 import FacebookLogo from '../Images/facebook.png';
-import Card from '../Components/Section/Card.js';
+import Card from './Section/Card.js';
+import Image from './Section/Image.js';
+import Doc from './Section/Doc.js';
 import {goToIndex} from '../Actions/siteactions.js'
+import '../bootstrap/css/bootstrap.min.css';
 
 class Jhdees extends Component {
     static propTypes = {
@@ -15,7 +18,7 @@ class Jhdees extends Component {
         const { activeIndex, dispatch } = this.props;
         //use redux for which section is active when;
         let menuItems = ["My Card", "Doc", "Image"];
-        let sections = [<Card />,'',''];
+        let sections = [<Card />, <Doc />, <Image />];
         return (
             <div className="Jhdees">
                 <JhdeesMenu dispatch={dispatch} activeIndex={activeIndex} menuItems={menuItems} />
@@ -44,7 +47,7 @@ class JhdeesMenu extends Component{
     }
 
     render() {
-        const { menuItems } = this.props;
+        const { menuItems, activeIndex} = this.props;
         return (
             <div>
                 <div id="Header">
@@ -55,10 +58,13 @@ class JhdeesMenu extends Component{
                 <nav className="navbar navbar-default">
                     <ul className="nav navbar-nav">
                         {menuItems.map((item, index) =>
-                           <li key={item}>
+                           <li key={item} className={activeIndex == index ? "active": ""}>
                                <a onClick={this.goTo.bind(this, index)}>{item}</a>
                            </li>)
                         }
+                        <li>
+                            <a href="https://recipes.jhdees.com">Recieps</a>
+                        </li>
                         <li>
                             <a href="https://github.com/jhdees/">GitHub</a>
                         </li>
