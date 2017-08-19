@@ -29,6 +29,8 @@ class Doc extends Component {
                 </div>
                 <br/>
                 <textarea className="col-lg-12 well well-small" id="doc_container" style={{height:"200px"}} defaultValue="
+                    Broke as my cat's lil boy parts right now while i migrate away from php and rebuild the back end
+
                     I made this document sharing thing. You and any number of people (I have only tested with myself using Chrome and myself using FireFox at the same time) and you can see what they are typing with a 1 + latency second delay.
 
                     You just need to give whoever you want to share stuff with the number in that box. You can create new documents with that new document button.

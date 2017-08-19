@@ -66,6 +66,9 @@ class JhdeesMenu extends Component{
                             <a href="https://recipes.jhdees.com">Recieps</a>
                         </li>
                         <li>
+                            <a href="https://stuffonharold.jhdees.com">Stuff On Harold</a>
+                        </li>
+                        <li>
                             <a href="https://github.com/jhdees/">GitHub</a>
                         </li>
                     </ul>
