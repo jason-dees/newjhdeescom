@@ -4,7 +4,7 @@ import '../../Styles/Card.css';
 import LegoBrickBlack from '../../Images/LegoBrickBlack.png';
 
 class Card extends Component {
-    static render() {
+    render() {
         return (
             <Section>
                 <div id="Card">
