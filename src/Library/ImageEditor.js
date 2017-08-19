@@ -21,11 +21,11 @@ let ImageEditor = function(parent){
     this.imageData.onload = function(){
         let img = self.imageData;
 
-        canvas.height = img.height/(img.width/canvasWidth);
+        canvas.height = img.height/(img.width/self.canvas.width());
         context.drawImage(img,0,0,canvas.width,canvas.height);
     };
 
-	canvas.width = this.canvas.width();
+	canvas.width = this.canvas.width() ;
     this.selectedColor = '';
 	this.changes = [];
 	this.redos = [];

@@ -6,13 +6,13 @@ import Section from '../Section.js';
 import DocumentEditor from '../../Library/DocumentEditor.js';
 
 class Doc extends Component {
-    static componentDidMount(){
+    componentDidMount(){
         let editor = new DocumentEditor('#doc_container');
         editor.setNewButton('#NewButton');
         editor.setIdInput('#DocId');
     }
 
-    static render() {
+    render() {
         return (
             <Section>
                 <div className="form-inline">
