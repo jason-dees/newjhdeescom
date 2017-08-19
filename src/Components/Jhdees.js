@@ -58,7 +58,7 @@ class JhdeesMenu extends Component{
                 <nav className="navbar navbar-default">
                     <ul className="nav navbar-nav">
                         {menuItems.map((item, index) =>
-                           <li key={item} className={activeIndex == index ? "active": ""}>
+                           <li key={item} className={activeIndex === index ? "active": ""}>
                                <a onClick={this.goTo.bind(this, index)}>{item}</a>
                            </li>)
                         }
@@ -71,7 +71,7 @@ class JhdeesMenu extends Component{
                     </ul>
                     <ul className="nav navbar-nav pull-right hide">
                         <li>
-                            <img width="32" src={FacebookLogo}/>
+                            <img width="32" src={FacebookLogo} alt="Facebook Icon" />
                         </li>
                     </ul>
                 </nav>

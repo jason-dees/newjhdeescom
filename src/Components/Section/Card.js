@@ -4,14 +4,14 @@ import '../../Styles/Card.css';
 import LegoBrickBlack from '../../Images/LegoBrickBlack.png';
 
 class Card extends Component {
-    render() {
+    static render() {
         return (
             <Section>
                 <div id="Card">
                     <div>
-                        <img src={LegoBrickBlack} />
+                        <img src={LegoBrickBlack} alt="Lego Brick outline" />
                         <h1>Jason Dees</h1>
-                        <div className="clear-both"></div>
+                        <div className="clear-both" />
                         <h3 id="PositionTitle">Software Developer</h3>
                         <h4 id="Tech">.NET &middot; Xamarin </h4>
                     </div>
