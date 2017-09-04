@@ -15,14 +15,18 @@ let DocumentEditor = function(containerId){
 DocumentEditor.prototype.setIdInput = function(input){
 	let me = this;
 	this.IdInput = $(input);
-	this.IdInput.change(function(){me.startWords(input)});
+	this.IdInput.change(
+	    function(){
+	        me.startWords(input);
+	    }
+    );
 	this.IdInput.change();
 };
 
 DocumentEditor.prototype.setNewButton = function(btn){
 	let me = this;
 	this.NewButton = $(btn);
-	console.log(this.NewButton);
+
 	$(btn).click(function(){
 		me.newWords();
 	});
@@ -33,7 +37,7 @@ DocumentEditor.prototype.send = function(action, data, doneFn){
 
 	let finalFn = function() {
         if (doneFn) {
-            doneFn.apply(DocumentEditor.arguments);
+            doneFn.apply(DocumentEditor, arguments);
         }
     };
 	$.post('/Doc/?action=' + action,data, finalFn,"json");
@@ -44,10 +48,13 @@ DocumentEditor.prototype.write = function(getEvent){
 	let typedWords = this.current();
 	let afterWords = getEvent.docWords + "";//This is the Real DocumentEditor.ment
 	let beforeWords = getEvent.prevWords + "";//This is before the Real DocumentEditor.ment
-	if(typedWords === afterWords){return;}//Nothing changed;
+
+	if(typedWords === afterWords){ return; }//Nothing changed;
+
 	let before = diffString(beforeWords, afterWords); //what happened
 	let end = diffString(afterWords,typedWords); //Comparing current to typed;
 	let diff = diffString(this.beforeWords, typedWords);//Since last update on client
+
 	let finished = "";
 	if(beforeWords === typedWords){
 		if(this.beforeWords === afterWords){
@@ -107,7 +114,7 @@ DocumentEditor.prototype.getWords = function(isStart){
 			me.current(e.docWords);
 		}
 		else{
-			me.write(e);		
+			me.write(e);
 		}
 		me.getWordsTimeout();
 	});
@@ -140,7 +147,7 @@ export default DocumentEditor;
 
 function lastCharacter (str){
     str = str.toString();
-    return str.lastCharacter();
+    return str.slice(str.length-1);
 }
 
 function now(){
@@ -158,7 +165,7 @@ function now(){
  */
 
 function escape(s) {
-    let n = s;
+    var n = s;
     n = n.replace(/&/g, "&amp;");
     n = n.replace(/</g, "&lt;");
     n = n.replace(/>/g, "&gt;");
@@ -168,39 +175,39 @@ function escape(s) {
 }
 
 function diff( o, n ) {
-    let ns = {};
-    let os = {};
+    var ns = new Object();
+    var os = new Object();
 
-    for ( let i = 0; i < n.length; i++ ) {
-        if ( ns[ n[i] ] === null )
-            ns[ n[i] ] = { rows: [], o: null };
+    for ( var i = 0; i < n.length; i++ ) {
+        if ( ns[ n[i] ] == null )
+            ns[ n[i] ] = { rows: new Array(), o: null };
         ns[ n[i] ].rows.push( i );
     }
 
-    for ( let i = 0; i < o.length; i++ ) {
-        if ( os[ o[i] ] === null )
-            os[ o[i] ] = { rows: [], n: null };
+    for ( var i = 0; i < o.length; i++ ) {
+        if ( os[ o[i] ] == null )
+            os[ o[i] ] = { rows: new Array(), n: null };
         os[ o[i] ].rows.push( i );
     }
 
-    for ( let i in ns ) {
-        if ( ns[i].rows.length === 1 && typeof(os[i]) !== "undefined" && os[i].rows.length === 1 ) {
+    for ( var i in ns ) {
+        if ( ns[i].rows.length == 1 && typeof(os[i]) !== "undefined" && os[i].rows.length == 1 ) {
             n[ ns[i].rows[0] ] = { text: n[ ns[i].rows[0] ], row: os[i].rows[0] };
             o[ os[i].rows[0] ] = { text: o[ os[i].rows[0] ], row: ns[i].rows[0] };
         }
     }
 
-    for ( let i = 0; i < n.length - 1; i++ ) {
-        if ( n[i].text !== null && n[i+1].text === null && n[i].row + 1 < o.length && o[ n[i].row + 1 ].text === null &&
-            n[i+1] === o[ n[i].row + 1 ] ) {
+    for ( var i = 0; i < n.length - 1; i++ ) {
+        if ( n[i].text !== null && n[i+1].text == null && n[i].row + 1 < o.length && o[ n[i].row + 1 ].text == null &&
+            n[i+1] == o[ n[i].row + 1 ] ) {
             n[i+1] = { text: n[i+1], row: n[i].row + 1 };
             o[n[i].row+1] = { text: o[n[i].row+1], row: i + 1 };
         }
     }
 
-    for ( let i = n.length - 1; i > 0; i-- ) {
-        if ( n[i].text !== null && n[i-1].text === null && n[i].row > 0 && o[ n[i].row - 1 ].text === null &&
-            n[i-1] === o[ n[i].row - 1 ] ) {
+    for ( var i = n.length - 1; i > 0; i-- ) {
+        if ( n[i].text !== null && n[i-1].text == null && n[i].row > 0 && o[ n[i].row - 1 ].text == null &&
+            n[i-1] == o[ n[i].row - 1 ] ) {
             n[i-1] = { text: n[i-1], row: n[i].row - 1 };
             o[n[i].row-1] = { text: o[n[i].row-1], row: i - 1 };
         }
@@ -213,52 +220,53 @@ function diffString( o, n ) {
     o = o.replace(/\s+$/, '');
     n = n.replace(/\s+$/, '');
 
-    let out = diff(o === "" ? [] : o.split(/\s+/), n === "" ? [] : n.split(/\s+/) );
-    let del = [];
-    let fin = [];
-    let ins = [];
-    let all = [];
-    let str = "";
+    var out = diff(o == "" ? [] : o.split(/\s+/), n == "" ? [] : n.split(/\s+/) );
+    var del = [];
+    var fin = [];
+    var ins = [];
+    var all = [];
+    var str = "";
 
-    let oSpace = o.match(/\s+/g);
-    if (oSpace === null) {
+    var oSpace = o.match(/\s+/g);
+    if (oSpace == null) {
         oSpace = [""];
     } else {
         oSpace.push("");
     }
-    let nSpace = n.match(/\s+/g);
-    if (nSpace === null) {
+    var nSpace = n.match(/\s+/g);
+    if (nSpace == null) {
         nSpace = [""];
     } else {
         nSpace.push("");
     }
 
-    if (out.n.length === 0) {
-        for (let i = 0; i < out.o.length; i++) {//Del
+    if (out.n.length == 0) {
+        for (var i = 0; i < out.o.length; i++) {//Del
             str = escape(out.o[i]) + oSpace[i];
             del.push(str);
             all.push({action:-1, str: str});
         }
     } else {
-        if (out.n[0].text === null) {
-            for (n = 0; n < out.o.length && out.o[n].text === null; n++) { //Del
+        if (out.n[0].text == null) {
+            for (n = 0; n < out.o.length && out.o[n].text == null; n++) { //Del
                 str = escape(out.o[n]) + oSpace[n];
                 del.push(str);
                 all.push({action:-1, str: str});
             }
         }
 
-        for ( let i = 0; i < out.n.length; i++ ) {
-            if (out.n[i].text === null) {//Ins
+        for ( var i = 0; i < out.n.length; i++ ) {
+            if (out.n[i].text == null) {//Ins
                 str = escape(out.n[i]) + nSpace[i];
                 fin.push(str);
                 ins.push(str);
                 all.push({action:1, str: str});
             } else {
+                var pre = "";
                 str = out.n[i].text + nSpace[i];
                 fin.push(str);
                 all.push({action:0,str:str});
-                for (n = out.n[i].row + 1; n < out.o.length && out.o[n].text === null; n++ ) {//Del
+                for (n = out.n[i].row + 1; n < out.o.length && out.o[n].text == null; n++ ) {//Del
                     str = escape(out.o[n]) + oSpace[n];
                     del.push(str);
                     all.push({action:-1, str: str});
@@ -269,3 +277,4 @@ function diffString( o, n ) {
 
     return {del:del, fin:fin, ins:ins, all:all};
 }
+
