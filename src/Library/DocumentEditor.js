@@ -36,7 +36,7 @@ DocumentEditor.prototype.send = function(action, data, doneFn){
             doneFn.apply(DocumentEditor.arguments);
         }
     };
-	$.post('/Doc/' + action,data, finalFn,"json");
+	$.post('/Doc/?action=' + action,data, finalFn,"json");
 };
 
 DocumentEditor.prototype.write = function(getEvent){
