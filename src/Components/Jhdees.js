@@ -6,37 +6,43 @@ import FacebookLogo from '../Images/facebook.png';
 import Card from './Section/Card.js';
 import Image from './Section/Image.js';
 import Doc from './Section/Doc.js';
-import {goToIndex} from '../Actions/siteactions.js'
+import {goToIndex, Pages} from '../Actions/siteactions.js'
+import _ from 'underscore';
 import '../bootstrap/css/bootstrap.min.css';
 
 class Jhdees extends Component {
     static propTypes = {
-        activeIndex: PropTypes.number.isRequired,
+        activePage: PropTypes.string.isRequired,
         dispatch: PropTypes.func.isRequired
     };
+    constructor(props){
+        console.log(props);
+        super(props);
+    }
+
     render() {
-        const { activeIndex, dispatch } = this.props;
-        //use redux for which section is active when;
-        let menuItems = ["My Card", "Doc", "Image"];
+        const { activePage, dispatch } = this.props;
+
         let sections = [<Card />, <Doc />, <Image />];
+
         return (
             <div className="Jhdees">
-                <JhdeesMenu dispatch={dispatch} activeIndex={activeIndex} menuItems={menuItems} />
-                {sections[activeIndex]}
+                <JhdeesMenu dispatch={dispatch} activePage={activePage} menuItems={Pages} />
+                {sections[_.indexOf(Pages,activePage)]}
             </div>
         );
     }
 }
 
 const mapStateToProps = state => {
-    const { activeIndex } = state;
+    const { activePage } = state;
 
-    return { activeIndex };
+    return { activePage };
 };
 
 class JhdeesMenu extends Component{
     static propTypes = {
-        activeIndex: PropTypes.number,
+        activePage: PropTypes.string,
         menuItems: PropTypes.array.isRequired,
         dispatch: PropTypes.func.isRequired
     };
@@ -47,7 +53,7 @@ class JhdeesMenu extends Component{
     }
 
     render() {
-        const { menuItems, activeIndex} = this.props;
+        const { menuItems, activePage} = this.props;
         return (
             <div>
                 <div id="Header">
@@ -58,12 +64,12 @@ class JhdeesMenu extends Component{
                 <nav className="navbar navbar-default">
                     <ul className="nav navbar-nav">
                         {menuItems.map((item, index) =>
-                           <li key={item} className={activeIndex === index ? "active": ""}>
-                               <a onClick={this.goTo.bind(this, index)}>{item}</a>
+                           <li key={item} className={activePage === item ? "active": ""}>
+                               <a onClick={this.goTo.bind(this, item)} href={"#" + item}>{item}</a>
                            </li>)
                         }
                         <li>
-                            <a href="https://recipes.jhdees.com">Recieps</a>
+                            <a href="https://recipes.jhdees.com">Recipes</a>
                         </li>
                         <li>
                             <a href="https://stuffonharold.jhdees.com">Stuff On Harold</a>

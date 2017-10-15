@@ -1,6 +1,8 @@
 export const GO_TO_INDEX = "GO_TO_INDEX";
 
-export const goToIndex = (index) => ({
+export const goToIndex = (page) => ({
     type: GO_TO_INDEX,
-    index
+    page 
 });
+
+export const Pages = ["My Card", "Doc", "Image"];
