@@ -15,10 +15,6 @@ class Jhdees extends Component {
         activePage: PropTypes.string.isRequired,
         dispatch: PropTypes.func.isRequired
     };
-    constructor(props){
-        console.log(props);
-        super(props);
-    }
 
     render() {
         const { activePage, dispatch } = this.props;
