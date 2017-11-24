@@ -5,4 +5,8 @@ export const goToIndex = (page) => ({
     page 
 });
 
-export const Pages = ["My Card", "Doc", "Image"];
+export const Pages = [
+    {'route': '/', 'title':"My Card"}, 
+    {'route': '/doc', 'title': "Doc"}, 
+    {'route': '/image', 'title': "Image"}
+];

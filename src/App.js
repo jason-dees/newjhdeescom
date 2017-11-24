@@ -1,18 +1,18 @@
-import management from './Reducers/management.js';
-import { createStore } from 'redux';
 import React, { Component } from 'react';
-import { Provider } from 'react-redux';
 import Jhdees from './Components/Jhdees.js';
 
-const store = createStore(management);
+import createHistory from 'history/createBrowserHistory'
+import {Router } from 'react-router-dom'
+
+const history = createHistory();
 
 class App extends Component {
     render() {
         return (
             <div>
-                <Provider store={store}>
+                <Router history={history}>
                     <Jhdees />
-                </Provider>
+                </Router>
             </div>
         );
     }

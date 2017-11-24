@@ -1,55 +1,37 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
 import PropTypes from 'prop-types';
 import '../Styles/Jhdees.css';
 import FacebookLogo from '../Images/facebook.png';
 import Card from './Section/Card.js';
 import Image from './Section/Image.js';
 import Doc from './Section/Doc.js';
-import {goToIndex, Pages} from '../Actions/siteactions.js'
-import _ from 'underscore';
+import { Pages} from '../Actions/siteactions.js'
 import '../bootstrap/css/bootstrap.min.css';
+import { Switch, Route, Link } from 'react-router-dom'
+
 
 class Jhdees extends Component {
-    static propTypes = {
-        activePage: PropTypes.string.isRequired,
-        dispatch: PropTypes.func.isRequired
-    };
-
     render() {
-        const { activePage, dispatch } = this.props;
-
-        let sections = [<Card />, <Doc />, <Image />];
-
         return (
             <div className="Jhdees">
-                <JhdeesMenu dispatch={dispatch} activePage={activePage} menuItems={Pages} />
-                {sections[_.indexOf(Pages,activePage)]}
+                <JhdeesMenu  menuItems={Pages} />
+                <Switch>
+                    <Route exact path='/' component={Card} />
+                    <Route path='/doc' component={Doc} />
+                    <Route path='/image' component={Image} />
+                </Switch>
             </div>
         );
     }
 }
 
-const mapStateToProps = state => {
-    const { activePage } = state;
-
-    return { activePage };
-};
-
 class JhdeesMenu extends Component{
     static propTypes = {
-        activePage: PropTypes.string,
         menuItems: PropTypes.array.isRequired,
-        dispatch: PropTypes.func.isRequired
     };
 
-    goTo(index){
-        const {dispatch} = this.props;
-        dispatch(goToIndex(index));
-    }
-
     render() {
-        const { menuItems, activePage} = this.props;
+        const { menuItems } = this.props;
         return (
             <div>
                 <div id="Header">
@@ -60,8 +42,8 @@ class JhdeesMenu extends Component{
                 <nav className="navbar navbar-default">
                     <ul className="nav navbar-nav">
                         {menuItems.map((item, index) =>
-                           <li key={item} className={activePage === item ? "active": ""}>
-                               <a onClick={this.goTo.bind(this, item)} href={"#" + item}>{item}</a>
+                           <li key={item.route} className={window.location.pathname === item.route ? "active": ""}>
+                                <Link to={item.route}>{item.title}</Link>
                            </li>)
                         }
                         <li>
@@ -84,4 +66,4 @@ class JhdeesMenu extends Component{
         );
     }
 }
-export default connect(mapStateToProps)(Jhdees);
+export default Jhdees;
