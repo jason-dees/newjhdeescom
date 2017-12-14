@@ -18,6 +18,7 @@ class Jhdees extends Component {
                 <Switch>
                     <Route exact path='/' component={Card} />
                     <Route path='/doc' component={Doc} />
+                    <Route path='/doc/{:docId}' component={Doc} />
                     <Route path='/image' component={Image} />
                 </Switch>
             </div>
