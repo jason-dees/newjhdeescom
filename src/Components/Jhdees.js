@@ -9,7 +9,11 @@ import { Pages} from '../Actions/siteactions.js'
 import '../bootstrap/css/bootstrap.min.css';
 import { Switch, Route, Link } from 'react-router-dom'
 
-
+// the issue with this is that linking directly 
+//to doc/1 will try to make a web call to /doc/1 
+//instead of routing through the 
+//react app. I need it to route through react app
+//Hashes allow for that. This router does not
 class Jhdees extends Component {
     render() {
         return (
@@ -17,8 +21,8 @@ class Jhdees extends Component {
                 <JhdeesMenu  menuItems={Pages} />
                 <Switch>
                     <Route exact path='/' component={Card} />
-                    <Route path='/doc' component={Doc} />
-                    <Route path='/doc/{:docId}' component={Doc} />
+                    <Route path='/doc/:docId' component={Doc} />
+                    <Route exact path='/doc' component={Doc} />
                     <Route path='/image' component={Image} />
                 </Switch>
             </div>

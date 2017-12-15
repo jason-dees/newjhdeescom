@@ -6,6 +6,12 @@ import Section from '../Section.js';
 import DocumentEditor from '../../Library/DocumentEditor.js';
 
 class Doc extends Component {
+    constructor(){
+        super();
+        this.state = {
+            docId: 1
+        };
+    }
     componentDidMount(){
         let editor = new DocumentEditor('#doc_container');
         editor.setNewButton('#NewButton');
@@ -13,12 +19,16 @@ class Doc extends Component {
     }
 
     render() {
+        let { docId } = this.props.match.params;
+        if(docId == null){
+            docId = 1;
+        }
         return (
             <Section>
                 <div className="form-inline">
                     <div className="form-group">
                         <label className="sr-only" htmlFor="DocId">Document Id</label>
-                        <input type="text" id="DocId" className="form-control" placeholder="Document Id" defaultValue="1"/>
+                        <input type="text" id="DocId" className="form-control" placeholder="Document Id" defaultValue={docId}/>
                     </div>
                     <button className="btn has-tooltip btn-default" title="New Document" id="NewButton">
                         <i className="glyphicon glyphicon-file" />

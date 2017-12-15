@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
 import Jhdees from './Components/Jhdees.js';
 
-import createHistory from 'history/createBrowserHistory'
-import {Router } from 'react-router-dom'
-
-const history = createHistory();
+import { HashRouter } from 'react-router-dom'
 
 class App extends Component {
     render() {
         return (
             <div>
-                <Router history={history}>
+                <HashRouter>
                     <Jhdees />
-                </Router>
+                </HashRouter>
             </div>
         );
     }
