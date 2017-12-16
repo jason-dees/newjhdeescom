@@ -40,7 +40,8 @@ DocumentEditor.prototype.send = function(action, data, doneFn){
             doneFn.apply(DocumentEditor, arguments);
         }
     };
-	$.post('/Doc/?action=' + action,data, finalFn,"json");
+    
+	$.post('/Doc/?action=' + action, data, finalFn, "json").fail(() => console.log(arguments));
 };
 
 DocumentEditor.prototype.write = function(getEvent){

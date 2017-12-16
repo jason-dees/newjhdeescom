@@ -5,7 +5,7 @@ import FacebookLogo from '../Images/facebook.png';
 import Card from './Section/Card.js';
 import Image from './Section/Image.js';
 import Doc from './Section/Doc.js';
-import { Pages} from '../Actions/siteactions.js'
+import { Pages, tabLocationCheck} from '../Actions/siteactions.js'
 import '../bootstrap/css/bootstrap.min.css';
 import { Switch, Route, Link } from 'react-router-dom'
 
@@ -47,7 +47,7 @@ class JhdeesMenu extends Component{
                 <nav className="navbar navbar-default">
                     <ul className="nav navbar-nav">
                         {menuItems.map((item, index) =>
-                           <li key={item.route} className={window.location.pathname === item.route ? "active": ""}>
+                           <li key={item.route} className={tabLocationCheck(window.location, item.route) ? "active": ""}>
                                 <Link to={item.route}>{item.title}</Link>
                            </li>)
                         }

@@ -4,6 +4,7 @@
 import React, { Component } from 'react';
 import Section from '../Section.js';
 import DocumentEditor from '../../Library/DocumentEditor.js';
+import { Switch, Route, Link } from 'react-router-dom'
 
 class Doc extends Component {
     constructor(){
@@ -20,9 +21,11 @@ class Doc extends Component {
 
     render() {
         let { docId } = this.props.match.params;
+
         if(docId == null){
             docId = 1;
         }
+
         return (
             <Section>
                 <div className="form-inline">
@@ -33,9 +36,7 @@ class Doc extends Component {
                     <button className="btn has-tooltip btn-default" title="New Document" id="NewButton">
                         <i className="glyphicon glyphicon-file" />
                     </button>
-                    <a href="" className="btn btn-link has-tooltip" title="Link to Doc" id="LinkButton">
-                        <i className="glyphicon glyphicon-share"/>
-                    </a>
+                    <Link to={"/doc/" + docId}><i className="glyphicon glyphicon-share"/></Link> 
                 </div>
                 <br/>
                 <textarea className="col-lg-12 well well-small" id="doc_container" style={{height:"200px"}} defaultValue="
