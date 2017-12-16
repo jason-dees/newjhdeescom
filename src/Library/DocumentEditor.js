@@ -1,36 +1,27 @@
 import $ from 'jquery';
 import _ from 'underscore';
 
-let DocumentEditor = function(containerId){
+let DocumentEditor = function(){
 	this.timeout = null;
 	this.beforeWords = '';
     this.lastTyped = now().valueOf();
-	this.container = $(containerId);
 	this.Id = -1;
-	this.IdInput = null;
-	this.NewButton = null;
-	this.checkSeconds = 1;
+    this.checkSeconds = 1;
+    this.currentWords = '';
 };
 
-DocumentEditor.prototype.setIdInput = function(input){
-	let me = this;
-	this.IdInput = $(input);
-	this.IdInput.change(
-	    function(){
-	        me.startWords(input);
-	    }
-    );
-	this.IdInput.change();
-};
+let fakeString = "fake network call";
 
-DocumentEditor.prototype.setNewButton = function(btn){
-	let me = this;
-	this.NewButton = $(btn);
-
-	$(btn).click(function(){
-		me.newWords();
-	});
-};
+DocumentEditor.prototype.setId = function(id){
+    this.Id = id;
+    if(id === null || id === '' || id === undefined){
+        return;
+    }
+    if(isNaN(id)){
+        this.current("That's not a valid number...");
+    }
+	this.startWords();
+}
 
 DocumentEditor.prototype.send = function(action, data, doneFn){
 	if(data === null){data = {};}
@@ -41,12 +32,13 @@ DocumentEditor.prototype.send = function(action, data, doneFn){
         }
     };
     
-	$.post('/Doc/?action=' + action, data, finalFn, "json").fail(() => console.log(arguments));
+    return $.post('/Doc/?action=' + action, data, finalFn, "json")
+        .fail(() => console.log(arguments));
 };
 
 DocumentEditor.prototype.write = function(getEvent){
 	//It deletes last
-	let typedWords = this.current();
+	let typedWords = this.currentWords;
 	let afterWords = getEvent.docWords + "";//This is the Real DocumentEditor.ment
 	let beforeWords = getEvent.prevWords + "";//This is before the Real DocumentEditor.ment
 
@@ -71,7 +63,6 @@ DocumentEditor.prototype.write = function(getEvent){
 		let isIns = _.indexOf(before.ins,word)>-1 || _.indexOf(diff.ins.word)>-1;
 		let isBDel = _.indexOf(diff.del,word)>-1;
 		if(end.all[i].action>-1 || (isDel && isIns && !isBDel)){
-			//I need to add words that are both in deleted by end and added by before
 			finished += word;
 		}
 	}
@@ -90,19 +81,19 @@ DocumentEditor.prototype.sendUpdate = function(words){
 DocumentEditor.prototype.newWords = function(){
 	let me = this;
 	let doneFn = function(e){
-		me.current(e);
-		me.IdInput.val(e.docId).change();
-		me.current(e.docWords);
+        me.current(e.docWords);
+        window.location.hash = '#/doc/'+e.docId;
 		me.Id = e.docId;
 		me.getWordsTimeout();
 	};
 	let data = {words:'A thing',docId: -1};
-	this.send('newWords',data,doneFn);
+    this.send('newWords',data,doneFn);
 };
 
-DocumentEditor.prototype.startWords = function(input){
+DocumentEditor.prototype.startWords = function(){
 	clearTimeout(this.timeout);
-	this.Id = $(input).val();
+    window.location.hash = '#/doc/'+this.Id;
+
 	if(this.Id !== null && this.Id !== ''){
 		this.getWords(true);
 	}
@@ -110,15 +101,17 @@ DocumentEditor.prototype.startWords = function(input){
 
 DocumentEditor.prototype.getWords = function(isStart){
 	let me = this;
-	this.send('getWords', {docId: this.Id},function(e){
+	//this.send('getWords', {docId: this.Id},function(e){
 		if(isStart){
-			me.current(e.docWords);
+            //me.current(e.docWords);
+            me.current(fakeString);
 		}
 		else{
-			me.write(e);
+            //me.write(e);
+            me.write({docWords:me.current()});
 		}
 		me.getWordsTimeout();
-	});
+	//});
 };
 
 DocumentEditor.prototype.getWordsTimeout = function(){
@@ -133,15 +126,16 @@ DocumentEditor.prototype.sendContainerWords = function(){
 };
 
 DocumentEditor.prototype.sendWords = function(words){
-	let data = {docId: this.Id, words: words};
-	this.send('sendWords',data,function(){});
+    let data = {docId: this.Id, words: words};
+    fakeString = words;
+	//this.send('sendWords',data,function(){});
 };
 
 DocumentEditor.prototype.current = function(value){
 	if(value){
-		this.container.val(value);
+        this.currentWords = value;
 	}
-	return this.container.val();
+    return this.currentWords;
 };
 
 export default DocumentEditor;
