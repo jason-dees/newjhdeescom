@@ -5,4 +5,4 @@ export const goToIndex = (page) => ({
     page 
 });
 
-export const Pages = ["My Card", "Doc", "Image"];
+export const Pages = ["My Card", "Image"];
