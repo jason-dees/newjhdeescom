@@ -4,7 +4,7 @@ import '../Styles/Jhdees.css';
 import FacebookLogo from '../Images/facebook.png';
 import Card from './Section/Card.js';
 import Image from './Section/Image.js';
-import Doc from './Section/Doc.js';
+import CoEdit from './Section/CoEdit.js';
 import { Pages, tabLocationCheck} from '../Actions/siteactions.js'
 import '../bootstrap/css/bootstrap.min.css';
 import { Switch, Route, Link } from 'react-router-dom'
@@ -21,8 +21,8 @@ class Jhdees extends Component {
                 <JhdeesMenu  menuItems={Pages} />
                 <Switch>
                     <Route exact path='/' component={Card} />
-                    <Route path='/doc/:docId' component={Doc} />
-                    <Route exact path='/doc' component={Doc} />
+                    <Route path='/coeditor/:docId' component={CoEdit} />
+                    <Route exact path='/coeditor' component={CoEdit} />
                     <Route path='/image' component={Image} />
                 </Switch>
             </div>

@@ -7,8 +7,9 @@ export const goToIndex = (page) => ({
 
 export const Pages = [
     {'route': '/', 'title':"My Card"}, 
-    {'route': '/doc', 'title': "Doc"}, 
-    {'route': '/image', 'title': "Image"}
+    //{'route': '/doc', 'title': "Doc"}, 
+    {'route': '/coeditor', 'title': "CoEditor"}, 
+    {'route': '/scribble', 'title': "Scribblin"}
 ];
 
 export const  tabLocationCheck = function(location, route){
