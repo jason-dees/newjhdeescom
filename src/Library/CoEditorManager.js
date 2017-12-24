@@ -22,7 +22,9 @@ let manager = (state = { docId: -1, words: '', newWords: '' }, action) => {
         case NEW_DOCUMENT:
             return;
         case SEND_DOCUMENT:
-            return;
+            return {
+                ...action
+            }
         default:
             return state;
     }
@@ -46,6 +48,13 @@ export const newDocument = () => {};
 
 export const recievedDocument = () => {}; 
 
-export const sendDocument = (docId, newWords) => {
+export const sendDocument = (newWords) => dispatch => {
+    dispatch({type: WAITING});
 
+    return editor.SetLatestWords(newWords).then(() => {
+        dispatch({
+            type: RECIEVE_DOCUMENT,
+            words: editor.LatestWords
+        });
+    });
 }; 

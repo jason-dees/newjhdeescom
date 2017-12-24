@@ -56,7 +56,7 @@ class CoEditInner extends Component {
 
         var inputValue = e.currentTarget.value;
 
-        dispatch(sendDocument(docId,inputValue ));
+        dispatch(sendDocument(inputValue));
     }
 
     render() {

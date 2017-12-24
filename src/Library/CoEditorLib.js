@@ -9,7 +9,15 @@ function fetch(request){
     let isNew = request.url.indexOf('newWords') > 0;
     let executor = function(resolve, reject){
         if(isSend){
-
+            fakePrevWords = fakeWords;
+            request.json().then( response => {
+                var json = JSON.stringify({
+                    docId: fakeDocId, 
+                    docWords: response.words, 
+                    prevWords: fakePrevWords
+                });
+                resolve(new Response(json));
+            });
         }
         else {
             if(isNew){
@@ -49,7 +57,7 @@ let CoEditor = function(){
         return getDocument(newId);
     }
     self.SetLatestWords = function(latestWords){
-
+        return sendDocument(currentId, latestWords);
     }
     Object.defineProperty(self, 'LatestWords', { get: function() { return currentWords; } });
     Object.defineProperty(self, 'Id', { get: function() { return currentId; } });
@@ -85,11 +93,13 @@ let CoEditor = function(){
     let sendDocument = function(id, words){
         let constructedUrl = sendUrl + id;
         let init = { method: 'POST',
-                     body: {docId: id, words: words} 
+                     body: JSON.stringify({docId: id, words: words}) 
                    };
         let postRequest = new Request(constructedUrl, init);
 
-        fetch(postRequest).then(response => {});
+        return fetch(postRequest)
+            .then(response => response.json())
+            .then(json => currentWords = json.docWords);
     }
 };
 
