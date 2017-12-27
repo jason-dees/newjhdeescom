@@ -1,12 +1,12 @@
-//feels like it's redux time
+import {diffChars, applyPatch, createPatch, parsePatch} from 'diff';
 
 let fakeWords = "This is a fake get";
 let fakePrevWords = ""; 
 let fakeDocId = 25;
 function fetch(request){
-    let isGet = request.url.indexOf('getWords') > 0;
     let isSend = request.url.indexOf('sendWords') > 0;
     let isNew = request.url.indexOf('newWords') > 0;
+
     let executor = function(resolve, reject){
         if(isSend){
             fakePrevWords = fakeWords;
@@ -92,6 +92,9 @@ let CoEditor = function(){
     let sendUrl = baseUrl + 'sendWords'; //post {docId: this.Id, words: words};
     let sendDocument = function(id, words){
         let constructedUrl = sendUrl + id;
+        //do diff before this;
+        let patch = createPatch('', currentWords, words);
+        console.log(applyPatch(currentWords, parsePatch(patch)));
         let init = { method: 'POST',
                      body: JSON.stringify({docId: id, words: words}) 
                    };
@@ -99,7 +102,9 @@ let CoEditor = function(){
 
         return fetch(postRequest)
             .then(response => response.json())
-            .then(json => currentWords = json.docWords);
+            .then(json => {
+                currentWords = json.docWords;
+            });
     }
 };
 

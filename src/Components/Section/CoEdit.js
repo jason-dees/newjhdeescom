@@ -52,7 +52,7 @@ class CoEditInner extends Component {
     }
 
     inputTextValueChange(e){
-        const { docId, dispatch } = this.props;
+        const { dispatch } = this.props;
 
         var inputValue = e.currentTarget.value;
 
@@ -61,7 +61,6 @@ class CoEditInner extends Component {
 
     render() {
         const { docId, words } = this.props;
-        console.log(docId, words);
         return (
             <Section>
                 <div className="form-inline">
