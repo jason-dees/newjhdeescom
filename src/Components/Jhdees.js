@@ -20,10 +20,10 @@ class Jhdees extends Component {
             <div className="Jhdees">
                 <JhdeesMenu  menuItems={Pages} />
                 <Switch>
-                    <Route exact path='/' component={Card} />
                     <Route path='/coeditor/:docId' component={CoEdit} />
                     <Route exact path='/coeditor' component={CoEdit} />
                     <Route path='/image' component={Image} />
+                    <Route exact path='/' component={Card} />
                 </Switch>
             </div>
         );
